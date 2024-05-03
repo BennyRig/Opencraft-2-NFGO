@@ -6,7 +6,7 @@ using Unity.Netcode.Transports.UTP;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
     /// <summary>
     /// Internal use. Hides the script field for the given component.

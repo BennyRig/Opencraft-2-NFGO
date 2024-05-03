@@ -6,7 +6,7 @@ using Unity.Collections;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Unity.Netcode.EditorTests
+namespace Unity.Netcode.gameobjects.EditorTests
 {
     public class BytePackerTests
     {

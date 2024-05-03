@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
     [CustomEditor(typeof(NetworkPrefabsList), true)]
     [CanEditMultipleObjects]

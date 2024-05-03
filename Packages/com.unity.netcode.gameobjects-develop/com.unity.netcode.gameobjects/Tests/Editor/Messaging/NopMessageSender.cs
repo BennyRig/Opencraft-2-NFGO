@@ -1,4 +1,4 @@
-namespace Unity.Netcode.EditorTests
+namespace Unity.Netcode.gameobjects.EditorTests
 {
     internal class NopMessageSender : INetworkMessageSender
     {

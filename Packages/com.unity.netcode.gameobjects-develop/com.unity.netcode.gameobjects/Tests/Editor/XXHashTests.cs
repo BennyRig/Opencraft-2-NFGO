@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Unity.Netcode.EditorTests
+namespace Unity.Netcode.gameobjects.EditorTests
 {
     public class XXHashTests
     {

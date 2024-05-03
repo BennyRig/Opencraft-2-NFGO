@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Netcode.Editor.Configuration;
+using Unity.Netcode.gameobjects.Editor.Configuration;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
 #if UNITY_EDITOR
     /// <summary>

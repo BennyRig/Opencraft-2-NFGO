@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Netcode.Editor.Configuration;
+using Unity.Netcode.gameobjects.Editor.Configuration;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
     /// <summary>
     /// This <see cref="CustomEditor"/> handles the translation between the <see cref="NetworkConfig"/> and

@@ -5,7 +5,7 @@ using NUnit.Framework.Internal;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace Unity.Netcode.EditorTests
+namespace Unity.Netcode.gameobjects.EditorTests
 {
     public class MessageReceivingTests
     {

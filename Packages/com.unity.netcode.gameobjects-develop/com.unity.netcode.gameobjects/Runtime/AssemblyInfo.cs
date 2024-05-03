@@ -1,8 +1,8 @@
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Unity.Netcode.Components")]
 #if UNITY_EDITOR
-[assembly: InternalsVisibleTo("Unity.Netcode.Editor")]
-[assembly: InternalsVisibleTo("Unity.Netcode.Editor.CodeGen")]
+[assembly: InternalsVisibleTo("Unity.Netcode.gameobjects.Editor")]
+[assembly: InternalsVisibleTo("Unity.Netcode.gameobjects.Editor.CodeGen")]
 #endif // UNITY_EDITOR
 #if MULTIPLAYER_TOOLS
 [assembly: InternalsVisibleTo("Unity.Multiplayer.Tools.Adapters.Ngo1WithUtp2")]
@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Unity.Netcode.TestHelpers.Runtime")]
 [assembly: InternalsVisibleTo("TestProject.RuntimeTests")]
 #if UNITY_EDITOR
-[assembly: InternalsVisibleTo("Unity.Netcode.EditorTests")]
+[assembly: InternalsVisibleTo("Unity.Netcode.gameobjects.EditorTests")]
 [assembly: InternalsVisibleTo("TestProject.EditorTests")]
 #endif // UNITY_EDITOR
 #if MULTIPLAYER_TOOLS

@@ -4,7 +4,7 @@
     "references": [
         "Unity.Netcode.Runtime",
 		"TestProject",
-        "Unity.Netcode.Editor",
+        "Unity.Netcode.gameobjects.Editor",
         "Unity.Netcode.Components",
         "ScriptsForAutomatedTesting",
         "Unity.PerformanceTesting",

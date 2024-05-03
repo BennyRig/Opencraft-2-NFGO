@@ -5,7 +5,7 @@
     "references": [
         "Unity.Collections",
         "Unity.Netcode.Runtime",
-        "Unity.Netcode.Editor",
+        "Unity.Netcode.gameobjects.Editor",
         "Unity.Netcode.Components",
         "Unity.Multiplayer.MetricTypes",
         "Unity.Multiplayer.NetStats",

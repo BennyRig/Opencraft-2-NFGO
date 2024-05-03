@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Unity.Collections;
 
-namespace Unity.Netcode.EditorTests
+namespace Unity.Netcode.gameobjects.EditorTests
 {
     public class UserBitReaderAndBitWriterTests_NCCBUG175
     {

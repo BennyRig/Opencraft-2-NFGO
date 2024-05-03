@@ -8,7 +8,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
     /// <summary>
     /// Integration with Unity Relay SDK and Unity Transport that support the additional buttons in the NetworkManager inspector.

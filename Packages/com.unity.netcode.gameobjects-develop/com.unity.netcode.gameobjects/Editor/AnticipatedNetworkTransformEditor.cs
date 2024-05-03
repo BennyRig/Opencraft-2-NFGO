@@ -1,7 +1,7 @@
 using Unity.Netcode.Components;
 using UnityEditor;
 
-namespace Unity.Netcode.Editor
+namespace Unity.Netcode.gameobjects.Editor
 {
     /// <summary>
     /// The <see cref="CustomEditor"/> for <see cref="AnticipatedNetworkTransform"/>

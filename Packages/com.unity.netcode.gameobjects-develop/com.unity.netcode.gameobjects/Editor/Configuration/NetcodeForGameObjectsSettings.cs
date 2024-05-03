@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace Unity.Netcode.Editor.Configuration
+namespace Unity.Netcode.gameobjects.Editor.Configuration
 {
     internal class NetcodeForGameObjectsEditorSettings
     {
