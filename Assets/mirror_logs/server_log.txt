@@ -1,0 +1,13 @@
+[2024-05-03 17:17:11] Server Uptime: 00:00:00.1626713, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 17:17:39] Server Uptime: 00:00:00.0825756, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 17:17:51] Server Uptime: 00:00:00.0850815, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 17:18:07] Server Uptime: 00:00:00.0756542, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 17:20:14] Server Uptime: 00:00:00.0734148, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 17:20:51] Server Uptime: 00:00:00, Connected Players: 0, Objects on Server: 0
+[2024-05-03 17:21:17] Server Uptime: 00:00:00, Connected Players: 0, Objects on Server: 0
+[2024-05-03 20:59:37] Server Uptime: 00:00:00.0009997, Connected Players: 0, Objects on Server: 0
+[2024-05-03 20:59:53] Server Uptime: 00:00:00, Connected Players: 0, Objects on Server: 0
+[2024-05-03 21:01:02] Server Uptime: 00:00:00.0740883, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 21:02:12] Server Uptime: 00:00:00.0720761, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 21:03:12] Server Uptime: 00:01:00.2403183, Connected Players: 0, Objects on Server: 2501
+[2024-05-03 21:04:12] Server Uptime: 00:02:00.2413756, Connected Players: 0, Objects on Server: 2501
