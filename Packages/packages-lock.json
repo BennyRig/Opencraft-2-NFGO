@@ -153,6 +153,21 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.multiplayer.tools": {
+      "version": "2.0.0-pre.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.profiling.core": "1.0.0-pre.1",
+        "com.unity.nuget.newtonsoft-json": "2.0.0",
+        "com.unity.nuget.mono-cecil": "1.10.1",
+        "com.unity.collections": "1.1.0",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.burst": "1.6.6",
+        "com.unity.mathematics": "1.2.6"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.netcode": {
       "version": "1.0.17",
       "depth": 0,
@@ -164,6 +179,15 @@
         "com.unity.modules.animation": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.netcode.gameobjects": {
+      "version": "file:com.unity.netcode.gameobjects-develop/com.unity.netcode.gameobjects",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1",
+        "com.unity.transport": "1.4.0"
+      }
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.4",
