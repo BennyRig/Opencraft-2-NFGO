@@ -20,12 +20,12 @@ public class NetworkHelper_NFGO : MonoBehaviour
         if (startServerInEditor)
         {
             NetworkManager.Singleton.StartServer();
-            Debug.LogError("Started Server");
+            Debug.Log("Started Server");
         }
         else
         {
             NetworkManager.Singleton.StartClient();
-            Debug.LogError("Started Client");
+            Debug.Log("Started Client");
         
         }
 #else
@@ -35,12 +35,14 @@ public class NetworkHelper_NFGO : MonoBehaviour
         {
             if (arg == "-server")
             {
-               NetworkManager.Singleton.StartServer();
+                NetworkManager.Singleton.StartServer();
+                Debug.Log("Started Server");
                 return;
             }
             else if (arg == "-client")
             {
                 NetworkManager.Singleton.StartClient();
+                Debug.Log("Started Client");
                 return;
             }
         }
