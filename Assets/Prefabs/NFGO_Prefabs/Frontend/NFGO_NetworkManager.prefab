@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5585225318197508988}
   - component: {fileID: -4226254301720217511}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: NFGO_NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,8 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: -4226254301720217511}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 1221173980260232169, guid: d6f6c8a32f8d0ff408ff30cbca3d2ab3,
+      type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: ad7a8e7cd633c5d44b9564b8cdc922ce, type: 2}

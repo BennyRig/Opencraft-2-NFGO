@@ -6,6 +6,7 @@ public class ComponentSelector : MonoBehaviour
     public GameObject Mirror_frontend;
 
     public GameObject NFGO_frontend;
+    public GameObject NFGO_NetworkManeger;
 
     public enum DebugComponent
     {
@@ -57,22 +58,26 @@ public class ComponentSelector : MonoBehaviour
                 ECS_frontend.SetActive(true);
                 Mirror_frontend.SetActive(false);
                 NFGO_frontend.SetActive(false);
+                NFGO_NetworkManeger.SetActive(false);
                 break;
             case DebugComponent.Mirror:
                 ECS_frontend.SetActive(false);
                 Mirror_frontend.SetActive(true);
                 NFGO_frontend.SetActive(false);
+                NFGO_NetworkManeger.SetActive(false);
                 break;
             
             case DebugComponent.NFGO_frontend:
                 ECS_frontend.SetActive(false);
                 Mirror_frontend.SetActive(false);
-                NFGO_frontend.SetActive(true);
+                NFGO_frontend.SetActive(true);  
+                NFGO_NetworkManeger.SetActive(true);
                 break;
             case DebugComponent.off:
                 ECS_frontend.SetActive(false);
                 Mirror_frontend.SetActive(false);
                 NFGO_frontend.SetActive(false);
+                NFGO_NetworkManeger.SetActive(false);
                 break;
         }
     }
