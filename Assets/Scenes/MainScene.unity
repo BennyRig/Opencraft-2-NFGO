@@ -443,7 +443,7 @@ MonoBehaviour:
   NFGO_frontend: {fileID: 413229481590481888, guid: 036e21c1e93dbaf4caf478701ec8836d,
     type: 3}
   NFGO_NetworkManeger: {fileID: 360647025}
-  debugComponentSelection: 1
+  debugComponentSelection: 3
 --- !u!4 &794583264
 Transform:
   m_ObjectHideFlags: 0
