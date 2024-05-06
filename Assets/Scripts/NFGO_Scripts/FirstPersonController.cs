@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using kcp2k;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController_NFGO : NetworkBehaviour
@@ -83,14 +84,14 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         HighlightBlock();
 
         // Placing blocks
-        // if (Mouse.current.leftButton.wasPressedThisFrame)
-        // {
-        //     CmdPlaceBlock(playerCam.position, playerCam.forward);
-        // }
-        // else if (Mouse.current.rightButton.wasPressedThisFrame)
-        // {
-        //     CmdRemoveBlock(playerCam.position, playerCam.forward);
-        // }
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            PlaceBlockRpc(playerCam.position, playerCam.forward);
+        }
+        else if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            RemoveBlockRpc(playerCam.position, playerCam.forward);
+        }
 
         controller.Move(velocity * Time.deltaTime);
 
@@ -135,78 +136,83 @@ public class FirstPersonController_NFGO : NetworkBehaviour
 
     // Placing and removing blocks
     // [Command]
-    // void CmdPlaceBlock(Vector3 cameraPosition, Vector3 cameraForward)
-    // {
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance))
-    //     {
-    //         Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
-
-    //         if (!IsBlockAtPosition(gridPosition) && !IsPlayerInSpace(gridPosition))
-    //         {
-    //             GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
-    //             NetworkServer.Spawn(newBlock);
-    //         }
-    //     }
-    // }
+    [Rpc(SendTo.Server)]
+    void PlaceBlockRpc(Vector3 cameraPosition, Vector3 cameraForward)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance))
+        {
+            Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
+            Debug.Log("x:" + gridPosition.x+"y:" + gridPosition.y);
+            Debug.Log("is block at pos:" +IsBlockAtPosition(gridPosition)+"isplayer in space?:" + IsPlayerInSpace(gridPosition));
+            if (!IsBlockAtPosition(gridPosition) && !IsPlayerInSpace(gridPosition))
+            {
+                GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
+                NetworkObject blockNetworkObject = newBlock.GetComponent<NetworkObject>();
+                blockNetworkObject.Spawn();
+            }
+        }
+    }
     
-    // bool IsPlayerInSpace(Vector3 position)
-    // {
-    //     Collider[] playerColliders = playerRoot.GetComponentsInChildren<Collider>();
+    bool IsPlayerInSpace(Vector3 position)
+    {
+        Collider[] playerColliders = playerRoot.GetComponentsInChildren<Collider>();
 
-    //     // Adjust the height based on the player's size
-    //     float playerHeight = 1.8f;
+        // Adjust the height based on the player's size
+        float playerHeight = 1.8f;
 
-    //     foreach (Collider playerCollider in playerColliders)
-    //     {
-    //         Collider[] colliders = Physics.OverlapBox(position + new Vector3(0f, playerHeight / 2f, 0f), new Vector3(0.375f, playerHeight / 2f, 0.375f));
+        foreach (Collider playerCollider in playerColliders)
+        {
+            Collider[] colliders = Physics.OverlapBox(position + new Vector3(0f, playerHeight / 2f, 0f), new Vector3(0.375f, playerHeight / 2f, 0.375f));
 
-    //         foreach (Collider collider in colliders)
-    //         {
-    //             if (collider.CompareTag("Block"))
-    //             {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
+            foreach (Collider collider in colliders)
+            {
+                if (collider.CompareTag("Player_NFGO"))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    // Vector3 RoundToNearestGrid(Vector3 position)
-    // {
-    //     float x = Mathf.Round(position.x / gridSize) * gridSize;
-    //     float y = Mathf.Round(position.y / gridSize) * gridSize;
-    //     float z = Mathf.Round(position.z / gridSize) * gridSize;
-    //     return new Vector3(x, y, z);
-    // }
+    Vector3 RoundToNearestGrid(Vector3 position)
+    {
+        float x = Mathf.Round(position.x / gridSize) * gridSize;
+        float y = Mathf.Round(position.y / gridSize) * gridSize;
+        float z = Mathf.Round(position.z / gridSize) * gridSize;
+        return new Vector3(x, y, z);
+    }
 
-    // bool IsBlockAtPosition(Vector3 position)
-    // {
-    //     Collider[] colliders = Physics.OverlapSphere(position, 0.35f);
-    //     foreach (Collider collider in colliders)
-    //     {
-    //         if (collider.CompareTag("Block"))
-    //         {
-    //             return true;
-    //         }
-    //     }
+    bool IsBlockAtPosition(Vector3 position)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, 0.35f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Block"))
+            {
+                return true;
+            }
+        }
 
-    //     return false;
-    // }
+        return false;
+    }
 
     // [Command]
-    // void CmdRemoveBlock(Vector3 cameraPosition, Vector3 cameraForward)
-    // {
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxRemoveDistance))
-    //     {
-    //         if (hit.collider.CompareTag("Block"))
-    //         {
-    //             Destroy(hit.collider.gameObject);
-    //             NetworkServer.Destroy(hit.collider.gameObject);
-    //         }
-    //     }
-    // }
+    [Rpc(SendTo.Server)]
+    void RemoveBlockRpc(Vector3 cameraPosition, Vector3 cameraForward)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxRemoveDistance))
+        {
+            if (hit.collider.CompareTag("Block"))
+            {
+                NetworkObject blockNetworkObject = hit.collider.gameObject.GetComponent<NetworkObject>();
+                Destroy(hit.collider.gameObject);
+                blockNetworkObject.Despawn();
+            }
+        }
+    }
 
     void HighlightBlock()
     {

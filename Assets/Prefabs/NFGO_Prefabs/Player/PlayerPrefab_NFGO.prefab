@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2606348534097749673}
   m_Layer: 0
   m_Name: PlayerBody
-  m_TagString: Untagged
+  m_TagString: Player_NFGO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 5204051840442509570}
   m_Layer: 0
   m_Name: PlayerPrefab_NFGO
-  m_TagString: Untagged
+  m_TagString: Player_NFGO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2246064713
+  GlobalObjectIdHash: 1712701569
   InScenePlacedSourceGlobalObjectIdHash: 1189029622
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -345,9 +345,9 @@ MonoBehaviour:
     m_Flags: 0
   blockPrefab: {fileID: 2593175915567221382, guid: 5d8937d85f20b7b4c9a0311615290a12,
     type: 3}
-  maxPlaceDistance: 10
-  maxRemoveDistance: 10
-  gridSize: 0.75
+  maxPlaceDistance: 5
+  maxRemoveDistance: 5
+  gridSize: 1
   highlightMaterial: {fileID: 2100000, guid: 4c75543d03a2ebc4b85c140a652b6e5f, type: 2}
 --- !u!114 &5204051840442509570
 MonoBehaviour:
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 3008560579625979097}
   m_Layer: 0
   m_Name: PlayerCamera
-  m_TagString: Untagged
+  m_TagString: Player_NFGO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -928,7 +928,7 @@ PrefabInstance:
     - target: {fileID: 5936057823083588447, guid: a86b8d4613d153b4e8e2dac7b61d8cdd,
         type: 3}
       propertyPath: startServerInEditor
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7472453845514531833, guid: a86b8d4613d153b4e8e2dac7b61d8cdd,
         type: 3}
