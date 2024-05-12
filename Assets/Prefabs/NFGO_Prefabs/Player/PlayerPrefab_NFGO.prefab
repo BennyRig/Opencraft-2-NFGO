@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &340655643698668209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7234568500661759657}
-  m_Layer: 0
-  m_Name: Feet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7234568500661759657
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 340655643698668209}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.95, z: 0}
-  m_LocalScale: {x: 0.75, y: 1.8, z: 0.75}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4891979103465323831}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1001068952588996838
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,9 +12,9 @@ GameObject:
   - component: {fileID: 4591071093589315493}
   - component: {fileID: 6671762274501411617}
   - component: {fileID: 2606348534097749673}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerBody
-  m_TagString: Player_NFGO
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,9 +118,12 @@ GameObject:
   - component: {fileID: -294951057291978793}
   - component: {fileID: -3540875041183885378}
   - component: {fileID: 5204051840442509570}
-  m_Layer: 0
+  - component: {fileID: -4133667293724481031}
+  - component: {fileID: -6339252718902168662}
+  - component: {fileID: 7520669198305421729}
+  m_Layer: 6
   m_Name: PlayerPrefab_NFGO
-  m_TagString: Player_NFGO
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,13 +137,12 @@ Transform:
   m_GameObject: {fileID: 1221173980260232169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6100682155915800866}
   - {fileID: 7694529916740989231}
-  - {fileID: 7234568500661759657}
   - {fileID: 8764205422137378334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -187,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1712701569
+  GlobalObjectIdHash: 196602628
   InScenePlacedSourceGlobalObjectIdHash: 1189029622
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -239,9 +210,8 @@ MonoBehaviour:
   cameraSensitivity: 0.25
   controller: {fileID: -294951057291978793}
   speed: 5
-  jumpHeight: 0.5
+  jumpHeight: 1
   gravity: 9.81
-  feet: {fileID: 7234568500661759657}
   isGrounded: 0
   move:
     m_Name: Move
@@ -380,6 +350,55 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-4133667293724481031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221173980260232169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1058ed1ddb9fbda409897df26ad9a4e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6339252718902168662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221173980260232169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947bbf6d07a849f88ae34e79d6fb2f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartRecordingWhenEnabled: 0
+  m_RecordFrames: 1
+  m_ReplayOnNewDevices: 0
+  m_SimulateOriginalTimingOnReplay: 0
+  m_RecordStateEventsOnly: 0
+  m_CaptureMemoryDefaultSize: 2097152
+  m_CaptureMemoryMaxSize: 10485760
+  m_DevicePath: 
+  m_RecordButtonPath: 
+  m_PlayButtonPath: 
+  m_ChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7520669198305421729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221173980260232169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb17db8170b5e54e8d8fdaae21b7118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3246559505433401834
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +410,7 @@ GameObject:
   - component: {fileID: 5240872227486472485}
   - component: {fileID: 6168827441020045647}
   - component: {fileID: 4362803306025987960}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,9 +483,9 @@ GameObject:
   - component: {fileID: 8775949091829267860}
   - component: {fileID: 1204059204207892807}
   - component: {fileID: 3008560579625979097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCamera
-  m_TagString: Player_NFGO
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -480,7 +499,7 @@ Transform:
   m_GameObject: {fileID: 3305245739981623980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.026, y: 1.2, z: 0.069}
+  m_LocalPosition: {x: -0.026, y: 1.1, z: 0.069}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -525,7 +544,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -601,7 +620,7 @@ GameObject:
   - component: {fileID: 7511691718168496000}
   - component: {fileID: 6323862078844702238}
   - component: {fileID: 3289109764108550292}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}

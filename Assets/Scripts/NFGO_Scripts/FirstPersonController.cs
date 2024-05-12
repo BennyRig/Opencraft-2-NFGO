@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
-using kcp2k;
+
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController_NFGO : NetworkBehaviour
@@ -17,7 +17,6 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     public float speed;
     public float jumpHeight;
     public float gravity;
-    public Transform feet;
     public bool isGrounded;
     private Vector3 velocity;
 
@@ -62,13 +61,28 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     {
         if (!IsOwner)
         {
-             return;
-         }
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                if (renderer.CompareTag("Player"))
+                {
+                    renderer.enabled = true;
+                }
+            }
+            return;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
 
         controller = GetComponent<CharacterController>();
 
+         // Disable rendering of the local player's body
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            if (renderer.CompareTag("Player"))
+            {
+                renderer.enabled = false;
+            }
+        }
     }
 
     void Update()
@@ -82,20 +96,54 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         }
         
         HighlightBlock();
-
+        HandleBlocks();
+        HandleCamera();
+        HandleMovement();
+    }
         // Placing blocks
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            PlaceBlockRpc(playerCam.position, playerCam.forward);
-        }
-        else if (Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            RemoveBlockRpc(playerCam.position, playerCam.forward);
-        }
+        // if (Mouse.current.leftButton.wasPressedThisFrame)
+        // {
+        //     PlaceBlockRpc(playerCam.position, playerCam.forward);
+        // }
+        // else if (Mouse.current.rightButton.wasPressedThisFrame)
+        // {
+        //     RemoveBlockRpc(playerCam.position, playerCam.forward);
+        // }
 
-        controller.Move(velocity * Time.deltaTime);
+        // controller.Move(velocity * Time.deltaTime);
 
-        // Camera movement
+        // // Camera movement
+        // Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity,
+        //     mouseY.ReadValue<float>() * cameraSensitivity);
+        // rotX -= mouseInput.y;
+        // rotX = Mathf.Clamp(rotX, -90, 90);
+        // rotY += mouseInput.x;
+
+        // playerRoot.rotation = Quaternion.Euler(0f, rotY, 0f);
+        // playerCam.localRotation = Quaternion.Euler(rotX, 0f, 0f);
+
+        // // Player movement
+        // Vector2 moveInput = move.ReadValue<Vector2>();
+        // Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
+
+        // controller.Move(moveVelocity * (speed * Time.deltaTime));
+
+        // isGrounded = Physics.Raycast(feet.position, feet.TransformDirection(Vector3.down), 0.15f);
+        
+        // // Gravity
+        // if (!isGrounded)
+        // {
+        //     velocity.y -= gravity * Time.deltaTime;
+        // }
+        // else
+        // {
+        //     velocity.y = -0.1f;
+        // }
+
+        // controller.Move(velocity * Time.deltaTime);
+    //}
+ void HandleCamera()
+    {
         Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity,
             mouseY.ReadValue<float>() * cameraSensitivity);
         rotX -= mouseInput.y;
@@ -103,29 +151,44 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         rotY += mouseInput.x;
 
         playerRoot.rotation = Quaternion.Euler(0f, rotY, 0f);
-        playerCam.localRotation = Quaternion.Euler(rotX, 0f, 0f);
+        playerCam.localRotation = Quaternion.Euler(rotX, 0f, 0f); 
+    }
 
-        // Player movement
-        Vector2 moveInput = move.ReadValue<Vector2>();
-        Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
-
-        controller.Move(moveVelocity * (speed * Time.deltaTime));
-
-        isGrounded = Physics.Raycast(feet.position, feet.TransformDirection(Vector3.down), 0.15f);
-        
-        // Gravity
-        if (!isGrounded)
+    void HandleBlocks()
+    {
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
-            velocity.y -= gravity * Time.deltaTime;
+            PlaceBlockRpc(playerCam.position, playerCam.forward);
         }
-        else
+        else if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            velocity.y = -0.1f;
+            RemoveBlockRpc(playerCam.position, playerCam.forward);
         }
 
         controller.Move(velocity * Time.deltaTime);
     }
+    
+    void HandleMovement()
+    {
+        Vector2 moveInput = move.ReadValue<Vector2>();
+        Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
+        moveVelocity *= speed;
 
+        if (controller.isGrounded)
+        {
+            velocity.y = -0.1f; // Reset velocity when grounded
+            if (jump.triggered)
+            {
+                velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity); // Jump
+            }
+        }
+        else
+        {
+            velocity.y -= gravity * Time.deltaTime; // Apply gravity when jumping or falling
+        }
+
+        controller.Move((moveVelocity + velocity) * Time.deltaTime);
+    }
     void Jump()
     {
         if (isGrounded)
@@ -139,14 +202,14 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     [Rpc(SendTo.Server)]
     void PlaceBlockRpc(Vector3 cameraPosition, Vector3 cameraForward)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance))
+         RaycastHit hit;
+        int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
+
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
         {
-            Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
-            Debug.Log("x:" + gridPosition.x+"y:" + gridPosition.y);
-            Debug.Log("is block at pos:" +IsBlockAtPosition(gridPosition)+"isplayer in space?:" + IsPlayerInSpace(gridPosition));
-            if (!IsBlockAtPosition(gridPosition) && !IsPlayerInSpace(gridPosition))
+            if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance)
             {
+                Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
                 GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
                 NetworkObject blockNetworkObject = newBlock.GetComponent<NetworkObject>();
                 blockNetworkObject.Spawn();
@@ -154,27 +217,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         }
     }
     
-    bool IsPlayerInSpace(Vector3 position)
-    {
-        Collider[] playerColliders = playerRoot.GetComponentsInChildren<Collider>();
-
-        // Adjust the height based on the player's size
-        float playerHeight = 1.8f;
-
-        foreach (Collider playerCollider in playerColliders)
-        {
-            Collider[] colliders = Physics.OverlapBox(position + new Vector3(0f, playerHeight / 2f, 0f), new Vector3(0.375f, playerHeight / 2f, 0.375f));
-
-            foreach (Collider collider in colliders)
-            {
-                if (collider.CompareTag("Player_NFGO"))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    
 
     Vector3 RoundToNearestGrid(Vector3 position)
     {
@@ -203,13 +246,16 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     void RemoveBlockRpc(Vector3 cameraPosition, Vector3 cameraForward)
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxRemoveDistance))
+        int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
+
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
         {
-            if (hit.collider.CompareTag("Block"))
+            if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance) 
             {
                 NetworkObject blockNetworkObject = hit.collider.gameObject.GetComponent<NetworkObject>();
-                Destroy(hit.collider.gameObject);
                 blockNetworkObject.Despawn();
+                Destroy(hit.collider.gameObject);
+                
             }
         }
     }
@@ -217,7 +263,13 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     void HighlightBlock()
     {
         RaycastHit hit;
-        if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxPlaceDistance))
+        int layerMask = ~(1 << LayerMask.NameToLayer("Player")); // Ignore the player layer
+
+        Vector3 raycastDirection = playerCam.forward;
+        Vector3 raycastDirectionDownward = Vector3.down;
+
+        if (Physics.Raycast(playerCam.position, raycastDirection, out hit, maxPlaceDistance, layerMask) ||
+            Physics.Raycast(playerCam.position, raycastDirectionDownward, out hit, maxPlaceDistance, layerMask))
         {
             GameObject hitBlock = hit.collider.gameObject;
             if (hitBlock.CompareTag("Block"))
