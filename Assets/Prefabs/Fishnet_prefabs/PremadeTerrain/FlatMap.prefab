@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4653115375583223203}
   - component: {fileID: 5041332526504645008}
   - component: {fileID: 9150917469302226820}
+  - component: {fileID: 4778828222893646439}
   m_Layer: 0
   m_Name: FlatMap
   m_TagString: Untagged
@@ -48,7 +49,8 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 9150917469302226820}
   _networkObjectCache: {fileID: 9150917469302226820}
-  blockPrefab: {fileID: 0}
+  blockPrefab: {fileID: 2593175915567221382, guid: 5bcfaabd8a8c7874e8ce5e4f17bc5744,
+    type: 3}
   mapWidth: 50
   mapLength: 50
   mapHeight: 1
@@ -91,6 +93,21 @@ MonoBehaviour:
   _teleportThreshold: 1
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 83102251
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 3521289575870279373
+--- !u!114 &4778828222893646439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596296520556926139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1edb28744544b48b7a780a768ed393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 9150917469302226820}
+  _networkObjectCache: {fileID: 0}

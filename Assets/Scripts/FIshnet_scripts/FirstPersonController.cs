@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using FishNet.Connection;
+using FishNet;
 using FishNet.Object;
+
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : NetworkBehaviour
@@ -122,16 +123,16 @@ public class FirstPersonController : NetworkBehaviour
 
     void HandleBlocks()
     {
-        // if (Mouse.current.rightButton.wasPressedThisFrame)
-        // {
-        //     CmdPlaceBlock(playerCam.position, playerCam.forward);
-        // }
-        // else if (Mouse.current.leftButton.wasPressedThisFrame)
-        // {
-        //     CmdRemoveBlock(playerCam.position, playerCam.forward);
-        // }
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            CmdPlaceBlock(playerCam.position, playerCam.forward);
+        }
+        else if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            CmdRemoveBlock(playerCam.position, playerCam.forward);
+        }
 
-        // controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
     }
     
     void HandleMovement()
@@ -165,38 +166,38 @@ public class FirstPersonController : NetworkBehaviour
     }
 
     // Placing and removing blocks
-    // [Command]
-    // void CmdPlaceBlock(Vector3 cameraPosition, Vector3 cameraForward)
-    // {
-    //     RaycastHit hit;
-    //     int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
+    [ServerRpc]
+    void CmdPlaceBlock(Vector3 cameraPosition, Vector3 cameraForward)
+    {
+        RaycastHit hit;
+        int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
 
-    //     if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
-    //     {
-    //         if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance)
-    //         {
-    //             Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
-    //             GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
-    //             NetworkServer.Spawn(newBlock);
-    //         }
-    //     }
-    // }
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
+        {
+            if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance)
+            {
+                Vector3 gridPosition = RoundToNearestGrid(hit.point + hit.normal * 0.5f);
+                GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
+                InstanceFinder.ServerManager.Spawn(newBlock);
+            }
+        }
+    }
 
-    // [Command]
-    // void CmdRemoveBlock(Vector3 cameraPosition, Vector3 cameraForward)
-    // {
-    //     RaycastHit hit;
-    //     int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
+    [ServerRpc]
+    void CmdRemoveBlock(Vector3 cameraPosition, Vector3 cameraForward)
+    {
+        RaycastHit hit;
+        int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
 
-    //     if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
-    //     {
-    //         if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance) 
-    //         {
-    //             Destroy(hit.collider.gameObject);
-    //             NetworkServer.Destroy(hit.collider.gameObject);
-    //         }
-    //     }
-    // }
+        if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
+        {
+            if (hit.collider.CompareTag("Block") || hit.distance <= maxPlaceDistance) 
+            {
+                Destroy(hit.collider.gameObject);
+                InstanceFinder.ServerManager.Despawn(hit.collider.gameObject);
+            }
+        }
+    }
 
     bool IsPlayerInSpace(Vector3 position)
     {

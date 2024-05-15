@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8758503093042895729}
   - component: {fileID: 4916908092433536673}
-  - component: {fileID: -5370162023248555532}
   - component: {fileID: 303447098828111064}
   - component: {fileID: 6409780943897514906}
   - component: {fileID: 3049560444273763868}
+  - component: {fileID: 3792122101932454199}
+  - component: {fileID: 4053118734707733341}
+  - component: {fileID: 3284533711148661559}
   m_Layer: 6
   m_Name: PlayerPrefab_Fishnet
   m_TagString: Player
@@ -65,31 +67,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-5370162023248555532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669053311976344264}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 947bbf6d07a849f88ae34e79d6fb2f2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StartRecordingWhenEnabled: 0
-  m_RecordFrames: 1
-  m_ReplayOnNewDevices: 0
-  m_SimulateOriginalTimingOnReplay: 0
-  m_RecordStateEventsOnly: 0
-  m_CaptureMemoryDefaultSize: 2097152
-  m_CaptureMemoryMaxSize: 52428800
-  m_DevicePath: 
-  m_RecordButtonPath: 
-  m_PlayButtonPath: 
-  m_ChangeEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &303447098828111064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +88,8 @@ MonoBehaviour:
   controller: {fileID: 4916908092433536673}
   speed: 5
   jumpHeight: 1
-  gravity: 0
-  isGrounded: 1
+  gravity: 9.81
+  isGrounded: 0
   move:
     m_Name: Move
     m_Type: 0
@@ -257,7 +234,7 @@ MonoBehaviour:
   _ownerInterpolation: 1
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 5
+  <PrefabId>k__BackingField: 6
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -307,6 +284,58 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &3792122101932454199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669053311976344264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822ce4e2f74c6ce409d8228d7d52697e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 6409780943897514906}
+  _networkObjectCache: {fileID: 0}
+--- !u!114 &4053118734707733341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669053311976344264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947bbf6d07a849f88ae34e79d6fb2f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartRecordingWhenEnabled: 0
+  m_RecordFrames: 1
+  m_ReplayOnNewDevices: 0
+  m_SimulateOriginalTimingOnReplay: 0
+  m_RecordStateEventsOnly: 0
+  m_CaptureMemoryDefaultSize: 2097152
+  m_CaptureMemoryMaxSize: 10485760
+  m_DevicePath: 
+  m_RecordButtonPath: 
+  m_PlayButtonPath: 
+  m_ChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3284533711148661559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669053311976344264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73455258f175b844282fe65df304d9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4128461102450180931
 GameObject:
   m_ObjectHideFlags: 0

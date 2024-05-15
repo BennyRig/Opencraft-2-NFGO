@@ -1,6 +1,7 @@
 using UnityEngine;
 using FishNet.Object;
 using FishNet;
+using System.Globalization;
 
 public class FlatMapGenerator : NetworkBehaviour
 {
@@ -9,12 +10,11 @@ public class FlatMapGenerator : NetworkBehaviour
     public int mapLength;
     public int mapHeight;
 
-    void Start()
+    public override void OnStartNetwork()
     {
-        Debug.Log("I AM SERVER"+!base.Owner.IsLocalClient);
-        if (!base.Owner.IsLocalClient)
+        if (InstanceFinder.IsServerOnlyStarted)
         {
-            Debug.Log("I AM SERVER");
+            Debug.Log("Server generating world");
             GenerateFlatMap();
         }
     }
