@@ -11,16 +11,16 @@ public class PlayerLogging : NetworkBehaviour
 
     private bool isLoggingInitialized = false;
 
-    // public override void OnStartLocalPlayer()
-    // {
-    //     base.OnStartLocalPlayer();
+    public override void OnStartNetwork()
+    {
+        base.OnStartNetwork();
 
-    //     if (!isLoggingInitialized)
-    //     {
-    //         InitializeLogging();
-    //         isLoggingInitialized = true;
-    //     }
-    // }
+        if (!isLoggingInitialized)
+        {
+            InitializeLogging();
+            isLoggingInitialized = true;
+        }
+    }
 
     void InitializeLogging()
     {
@@ -55,7 +55,7 @@ public class PlayerLogging : NetworkBehaviour
 
         Vector3 playerPosition = transform.position;
 
-        double player_rtt =1;  // NetworkTime.rtt * 1000;
+        double player_rtt = FishNet.InstanceFinder.TimeManager.RoundTripTime;  // NetworkTime.rtt * 1000;
         string formattedLatency = player_rtt.ToString("F2");
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
