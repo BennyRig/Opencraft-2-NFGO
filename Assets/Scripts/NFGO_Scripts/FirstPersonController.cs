@@ -36,6 +36,18 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     public Material highlightMaterial;
     private GameObject highlightedBlock;
 
+    [Header("Benchmark Config")]
+    public bool enable_RPC_benchmark = false;
+
+    public int x = 0;
+    public int z = 0;
+
+    private Vector3 targetCoordinates ;
+    private bool is_placed = false;
+
+    public float tick_interval_time = 5f; 
+    private float next_Tick = 0; 
+
     void OnEnable()
     {
         move.Enable();
@@ -61,6 +73,27 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     {
         if (!IsOwner)
         {
+            // check for cmd line args
+            if (!Application.isEditor)
+            {
+                string[] args = System.Environment.GetCommandLineArgs();
+                if (args.Length > 3){
+                    for(int i = 0; i < args.Length-2;i++)
+                    {
+                        if (args[i] == "-rpc_benchmark"){
+                            enable_RPC_benchmark = true;
+                            if (!int.TryParse(args[i+1],  out x) || !int.TryParse(args[i+2], out z)){
+                                Debug.LogError("Unable to parse string.");    
+                            }
+                        }
+
+                    }
+                }
+            }
+            if(enable_RPC_benchmark){
+               targetCoordinates = new Vector3(x, 2, z);
+               next_Tick = Time.time + tick_interval_time;
+            }
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
                 if (renderer.CompareTag("Player"))
@@ -95,54 +128,66 @@ public class FirstPersonController_NFGO : NetworkBehaviour
             return;
         }
         
-        HighlightBlock();
-        HandleBlocks();
-        HandleCamera();
-        HandleMovement();
-    }
-        // Placing blocks
-        // if (Mouse.current.leftButton.wasPressedThisFrame)
-        // {
-        //     PlaceBlockRpc(playerCam.position, playerCam.forward);
-        // }
-        // else if (Mouse.current.rightButton.wasPressedThisFrame)
-        // {
-        //     RemoveBlockRpc(playerCam.position, playerCam.forward);
-        // }
-
-        // controller.Move(velocity * Time.deltaTime);
-
-        // // Camera movement
-        // Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity,
-        //     mouseY.ReadValue<float>() * cameraSensitivity);
-        // rotX -= mouseInput.y;
-        // rotX = Mathf.Clamp(rotX, -90, 90);
-        // rotY += mouseInput.x;
-
-        // playerRoot.rotation = Quaternion.Euler(0f, rotY, 0f);
-        // playerCam.localRotation = Quaternion.Euler(rotX, 0f, 0f);
-
-        // // Player movement
-        // Vector2 moveInput = move.ReadValue<Vector2>();
-        // Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
-
-        // controller.Move(moveVelocity * (speed * Time.deltaTime));
-
-        // isGrounded = Physics.Raycast(feet.position, feet.TransformDirection(Vector3.down), 0.15f);
+        if(enable_RPC_benchmark){
+            benchmark_step();
+        }else{
+            HighlightBlock();
+            HandleBlocks();
+            HandleCamera();
+            HandleMovement();
+        }
         
-        // // Gravity
-        // if (!isGrounded)
-        // {
-        //     velocity.y -= gravity * Time.deltaTime;
-        // }
-        // else
-        // {
-        //     velocity.y = -0.1f;
-        // }
 
-        // controller.Move(velocity * Time.deltaTime);
-    //}
- void HandleCamera()
+
+       
+    }
+
+    void benchmark_step(){
+        if ( next_Tick <= Time.time)
+        {
+            if(is_placed)
+            {
+                remove_at_cord_RPC();
+                Debug.Log("removed block");
+                is_placed = false;
+            }
+            else
+            {
+                place_at_cord_RPC();
+                Debug.Log("added block");
+                is_placed = true;
+            }
+            next_Tick = Time.time + tick_interval_time;
+        }
+        
+    }
+
+    [Rpc(SendTo.Server)]
+    void remove_at_cord_RPC()
+    {
+        Vector3 test = RoundToNearestGrid(targetCoordinates) + new Vector3(0,2,0);
+        Ray ray = new Ray(test, Vector3.down); // Assuming the ray points downward
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        { 
+            NetworkObject blockNetworkObject = hit.collider.gameObject.GetComponent<NetworkObject>();
+            blockNetworkObject.Despawn();
+            Destroy(hit.collider.gameObject);
+            Debug.Log("removed the block __");
+        }
+    }
+
+    [Rpc(SendTo.Server)]
+    void place_at_cord_RPC()
+    {
+        Vector3 gridPosition = RoundToNearestGrid(targetCoordinates);
+        GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
+        NetworkObject blockNetworkObject = newBlock.GetComponent<NetworkObject>();
+        blockNetworkObject.Spawn();
+    }
+
+    
+    void HandleCamera()
     {
         Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity,
             mouseY.ReadValue<float>() * cameraSensitivity);
@@ -202,7 +247,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     [Rpc(SendTo.Server)]
     void PlaceBlockRpc(Vector3 cameraPosition, Vector3 cameraForward)
     {
-         RaycastHit hit;
+        RaycastHit hit;
         int layerMask = ~(1 << LayerMask.NameToLayer("Player")); 
 
         if (Physics.Raycast(cameraPosition, cameraForward, out hit, maxPlaceDistance, layerMask))
@@ -332,4 +377,5 @@ public class FirstPersonController_NFGO : NetworkBehaviour
             blockRenderer.materials = newMaterials;
         }
     }
+
 }

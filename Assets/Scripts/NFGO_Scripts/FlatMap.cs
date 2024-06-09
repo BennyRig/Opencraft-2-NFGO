@@ -3,7 +3,7 @@ using Unity.Netcode;
 using System.Collections;
 
 
-public class FlatMapGenerator_NFGO : NetworkBehaviour
+    public class FlatMapGenerator_NFGO : NetworkBehaviour
 {
     public enum benchmark_type
     {
@@ -39,8 +39,9 @@ public class FlatMapGenerator_NFGO : NetworkBehaviour
 
     //peramiters for benchmark
     public float tick_interval_time = 1f; 
-    public int blocks_per_tick = 10;
     private float next_Tick = 0; 
+    public int blocks_per_tick = 10;
+   
 
     private int cur_y = 4;
     private int cur_x = 0;

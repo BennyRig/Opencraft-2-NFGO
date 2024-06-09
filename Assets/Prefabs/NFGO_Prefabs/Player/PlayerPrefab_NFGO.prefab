@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2466286574
+  GlobalObjectIdHash: 1189029622
   InScenePlacedSourceGlobalObjectIdHash: 1189029622
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -320,6 +320,9 @@ MonoBehaviour:
   maxRemoveDistance: 5
   gridSize: 1
   highlightMaterial: {fileID: 2100000, guid: 4c75543d03a2ebc4b85c140a652b6e5f, type: 2}
+  enable_rfc_benchmark: 1
+  x: 5
+  z: 5
 --- !u!114 &5204051840442509570
 MonoBehaviour:
   m_ObjectHideFlags: 0
