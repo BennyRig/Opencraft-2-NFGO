@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using PolkaDOTS.Emulation;
 using Unity.Netcode.Transports.UTP;
+using System.Collections;
 
 public class NetworkHelper_NFGO : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class NetworkHelper_NFGO : MonoBehaviour
         if (startServerInEditor)
         {
             networkManager.StartServer();
+
+            
         }
 
         if(startClientInEditor){
@@ -33,7 +36,15 @@ public class NetworkHelper_NFGO : MonoBehaviour
 
         #else
         string[] args = System.Environment.GetCommandLineArgs();
-
+        
+        foreach (string arg in args)
+        {
+            if (arg == "-closefast") {
+                StartCoroutine(waiter(20));
+                break;
+            }
+        }
+        args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args)
         {
             if (arg == "-server")
@@ -46,6 +57,7 @@ public class NetworkHelper_NFGO : MonoBehaviour
                 networkManager.StartClient();
                 return;
             }
+            
             // else if (arg == "-server_ip")
             // {
             //     int index = System.Array.IndexOf(args, arg);
@@ -92,9 +104,18 @@ public class NetworkHelper_NFGO : MonoBehaviour
         // inputRecorder.StartReplay();
     // }
 
+    
+    IEnumerator waiter(int time)
+    {
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(time);
+        Debug.Log("quiting client");
+        Application.Quit();
+        Debug.Log("this should not print");
+    }
+
+
 }
-
-
 // using System.Collections;
 // using System.Collections.Generic;
 // using Unity.Netcode;

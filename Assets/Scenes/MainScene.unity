@@ -329,6 +329,11 @@ PrefabInstance:
       objectReference: {fileID: 1964602099}
     - target: {fileID: 3884695691840728501, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
+      propertyPath: startClientInEditor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3884695691840728501, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
       propertyPath: startServerInEditor
       value: 1
       objectReference: {fileID: 0}
@@ -336,6 +341,28 @@ PrefabInstance:
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2768833403
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: mapHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: Grass_blockPrefab
+      value: 
+      objectReference: {fileID: 2593175915567221382, guid: 4d5c51376706de94dbb07a4101e7b6c0,
+        type: 3}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: Stone_blockPrefab
+      value: 
+      objectReference: {fileID: 2593175915567221382, guid: 5d8937d85f20b7b4c9a0311615290a12,
+        type: 3}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: benchmark_selection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8946441158362511491, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}

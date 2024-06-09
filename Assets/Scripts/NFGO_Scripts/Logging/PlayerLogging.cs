@@ -59,6 +59,7 @@ public class PlayerLogging : NetworkBehaviour
         double player_rtt =  1* 1000;
         string formattedLatency = player_rtt.ToString("F2");
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        
 
         // Log player data to file in CSV format
         string csvLine = $"{timestamp},{playerPosition.x},{playerPosition.y},{playerPosition.z},{formattedLatency}";
