@@ -45,7 +45,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     private Vector3 targetCoordinates ;
     private bool is_placed = false;
 
-    public float tick_interval_time = 5f; 
+    public float tick_interval_time = 0.5f; 
     private float next_Tick = 0; 
 
     void OnEnable()
@@ -77,12 +77,16 @@ public class FirstPersonController_NFGO : NetworkBehaviour
             if (!Application.isEditor)
             {
                 string[] args = System.Environment.GetCommandLineArgs();
-                if (args.Length > 3){
-                    for(int i = 0; i < args.Length-2;i++)
+                if (args.Length > 4){
+                    for(int i = 0; i < args.Length-3;i++)
                     {
+                        
                         if (args[i] == "-rpc_benchmark"){
                             enable_RPC_benchmark = true;
                             if (!int.TryParse(args[i+1],  out x) || !int.TryParse(args[i+2], out z)){
+                                Debug.LogError("Unable to parse string.");    
+                            }
+                            if(!float.TryParse(args[i+3],  out tick_interval_time)){
                                 Debug.LogError("Unable to parse string.");    
                             }
                         }
@@ -130,16 +134,11 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         
         if(enable_RPC_benchmark){
             benchmark_step();
-        }else{
-            HighlightBlock();
-            HandleBlocks();
-            HandleCamera();
-            HandleMovement();
         }
-        
-
-
-       
+        HighlightBlock();
+        HandleBlocks();
+        HandleCamera();
+        HandleMovement();
     }
 
     void benchmark_step(){

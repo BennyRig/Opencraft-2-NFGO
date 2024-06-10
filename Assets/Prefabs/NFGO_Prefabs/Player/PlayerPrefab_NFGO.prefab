@@ -121,7 +121,6 @@ GameObject:
   - component: {fileID: -4133667293724481031}
   - component: {fileID: -6339252718902168662}
   - component: {fileID: 7520669198305421729}
-  - component: {fileID: 7027476484425315807}
   m_Layer: 6
   m_Name: PlayerPrefab_NFGO
   m_TagString: Player
@@ -159,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1189029622
+  GlobalObjectIdHash: 2466286574
   InScenePlacedSourceGlobalObjectIdHash: 1189029622
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -320,9 +319,10 @@ MonoBehaviour:
   maxRemoveDistance: 5
   gridSize: 1
   highlightMaterial: {fileID: 2100000, guid: 4c75543d03a2ebc4b85c140a652b6e5f, type: 2}
-  enable_rfc_benchmark: 1
+  enable_RPC_benchmark: 0
   x: 5
   z: 5
+  tick_interval_time: 5
 --- !u!114 &5204051840442509570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,18 +401,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb17db8170b5e54e8d8fdaae21b7118, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7027476484425315807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221173980260232169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 952b08bab27c2b549934d1ea2b7d0cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3246559505433401834

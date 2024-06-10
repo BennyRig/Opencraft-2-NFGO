@@ -36,11 +36,14 @@ public class NetworkHelper_NFGO : MonoBehaviour
 
         #else
         string[] args = System.Environment.GetCommandLineArgs();
-        
-        foreach (string arg in args)
+        for(int i = 0; i < args.Length-1;i++)
         {
-            if (arg == "-closefast") {
-                StartCoroutine(waiter(20));
+            if (args[i] == "-closeafter"){
+                int time;
+                if (!int.TryParse(args[i+1],  out time)){
+                    Debug.LogError("Unable to parse string.");    
+                }
+                StartCoroutine(waiter(time));
                 break;
             }
         }

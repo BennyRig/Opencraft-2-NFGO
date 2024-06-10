@@ -35,7 +35,6 @@ using System.Collections;
 
     [Header("Benchmark Config")]
     public worldSizes benchmark_worldSize = worldSizes.small;
-    public int endTime;
 
     //peramiters for benchmark
     public float tick_interval_time = 1f; 
