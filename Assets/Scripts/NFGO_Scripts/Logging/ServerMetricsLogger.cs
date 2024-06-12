@@ -18,13 +18,13 @@ public class ServerMetricsLogger : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-
-        serverStartTime = DateTime.Now;
-
-        if (!isLoggingInitialized)
-        {
-            InitializeLogging();
-            isLoggingInitialized = true;
+        if(IsServer){
+            serverStartTime = DateTime.Now;
+            if (!isLoggingInitialized)
+            {
+                InitializeLogging();
+                isLoggingInitialized = true;
+            }
         }
     }
 
@@ -38,7 +38,7 @@ public class ServerMetricsLogger : NetworkBehaviour
         }
         string path = Path.Combine(logDirectory, logFileName);
         writer = new StreamWriter(path, true);
-
+    	
         // Write CSV header
         writer.WriteLine("Timestamp,Uptime(seconds),PlayerCount,ObjectCount");
 
@@ -56,10 +56,16 @@ public class ServerMetricsLogger : NetworkBehaviour
         TimeSpan uptime = DateTime.Now - serverStartTime;
         int playerCount = NetworkManager.ConnectedClients.Count;
         int objectCount = FindObjectsOfType<NetworkObject>().Count() - playerCount;
+        string[] args = System.Environment.GetCommandLineArgs();
+        string arg_string ="";
+        for(int i = 0; i < args.Length;i++)
+        {
+            arg_string += args[i] +" ";
+        }
 
         // Log server metrics to file in CSV format
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string csvLine = $"{timestamp},{uptime.TotalSeconds},{playerCount},{objectCount}";
+        string csvLine = $"{timestamp},{uptime.TotalSeconds},{playerCount},{objectCount},{arg_string}";
         writer.WriteLine(csvLine);
 
         writer.Flush();
@@ -68,9 +74,11 @@ public class ServerMetricsLogger : NetworkBehaviour
     
     public override void OnDestroy()
     {
-        if (writer != null)
-        {
-            writer.Close();
-        }
+        if(!IsServer){
+            if (writer != null)
+            {
+                writer.Close();
+            }
+         }
     }
 }

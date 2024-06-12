@@ -73,31 +73,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     {
         if (!IsOwner)
         {
-            // check for cmd line args
-            if (!Application.isEditor)
-            {
-                string[] args = System.Environment.GetCommandLineArgs();
-                if (args.Length > 4){
-                    for(int i = 0; i < args.Length-3;i++)
-                    {
-                        
-                        if (args[i] == "-rpc_benchmark"){
-                            enable_RPC_benchmark = true;
-                            if (!int.TryParse(args[i+1],  out x) || !int.TryParse(args[i+2], out z)){
-                                Debug.LogError("Unable to parse string.");    
-                            }
-                            if(!float.TryParse(args[i+3],  out tick_interval_time)){
-                                Debug.LogError("Unable to parse string.");    
-                            }
-                        }
-
-                    }
-                }
-            }
-            if(enable_RPC_benchmark){
-               targetCoordinates = new Vector3(x, 2, z);
-               next_Tick = Time.time + tick_interval_time;
-            }
+            
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
                 if (renderer.CompareTag("Player"))
@@ -107,7 +83,29 @@ public class FirstPersonController_NFGO : NetworkBehaviour
             }
             return;
         }
+        #if !UNITY_EDITOR
+        string[] args = System.Environment.GetCommandLineArgs();
+        if (args.Length > 3){
+            for(int i = 0; i < args.Length-3;i++)
+            {
+                if (args[i] == "-rpc_benchmark"){
+                    enable_RPC_benchmark = true;
+                    if (!int.TryParse(args[i+1],  out x) || !int.TryParse(args[i+2], out z)){
+                        Debug.LogError("Unable to parse string.");    
+                    }
+                    if(!float.TryParse(args[i+3],  out tick_interval_time)){
+                        Debug.LogError("Unable to parse string.");    
+                    }
+                }
 
+            }
+        }
+        #endif
+        if(enable_RPC_benchmark){
+            Debug.LogError("Starting Benchmark: terainmodification_benchmark: x:"+x+" z:"+z+"tick_interval_time "+ tick_interval_time);
+            targetCoordinates = new Vector3(x, 7, z);
+            next_Tick = Time.time + tick_interval_time;
+        }
         Cursor.lockState = CursorLockMode.Locked;
 
         controller = GetComponent<CharacterController>();
@@ -146,13 +144,13 @@ public class FirstPersonController_NFGO : NetworkBehaviour
         {
             if(is_placed)
             {
-                remove_at_cord_RPC();
+                remove_at_cord_RPC(targetCoordinates);
                 Debug.Log("removed block");
                 is_placed = false;
             }
             else
             {
-                place_at_cord_RPC();
+                place_at_cord_RPC(targetCoordinates);
                 Debug.Log("added block");
                 is_placed = true;
             }
@@ -162,7 +160,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    void remove_at_cord_RPC()
+    void remove_at_cord_RPC(Vector3 targetCoordinates)
     {
         Vector3 test = RoundToNearestGrid(targetCoordinates) + new Vector3(0,2,0);
         Ray ray = new Ray(test, Vector3.down); // Assuming the ray points downward
@@ -177,7 +175,7 @@ public class FirstPersonController_NFGO : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    void place_at_cord_RPC()
+    void place_at_cord_RPC(Vector3 targetCoordinates)
     {
         Vector3 gridPosition = RoundToNearestGrid(targetCoordinates);
         GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);

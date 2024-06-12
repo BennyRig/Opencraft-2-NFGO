@@ -52,7 +52,6 @@ using System.Collections;
 
     public override void OnNetworkSpawn()
     {
-        Debug.LogError("STARTING");
         if (IsServer) 
         {
             if (!Application.isEditor)
@@ -82,6 +81,12 @@ using System.Collections;
                                 Debug.LogError("Missing world size argument");
                                 break;
                         } 
+                    }
+                    if (args[i] == "-enviroment_load"){
+                        benchmark_selection = benchmark_type.terainmodification;
+                        if(!float.TryParse(args[i+1],  out tick_interval_time)){
+                            Debug.LogError("Unable to parse string.");    
+                        }
                     }
                 }
             }
@@ -127,6 +132,7 @@ using System.Collections;
                     NetworkObject blockNetworkObject = block.GetComponent<NetworkObject>();
                     blockNetworkObject.Spawn();
                 }
+                tick_interval_time -= 0.01f; 
                 next_Tick = Time.time + tick_interval_time;
             }
           
@@ -201,6 +207,7 @@ using System.Collections;
 
 
     void terainloading_benchmark(){
+         Debug.Log("Starting Benchmark: terainmodification_benchmark");
         set_world_size();
         GenerateFlatMap();
         // ADD check to see when client disconects 

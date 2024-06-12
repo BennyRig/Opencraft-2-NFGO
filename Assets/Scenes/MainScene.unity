@@ -344,8 +344,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
+      propertyPath: mapWidth
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
       propertyPath: mapHeight
-      value: 10
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: mapLength
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
@@ -363,6 +373,11 @@ PrefabInstance:
         type: 3}
       propertyPath: benchmark_selection
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652110022170759795, guid: 036e21c1e93dbaf4caf478701ec8836d,
+        type: 3}
+      propertyPath: benchmark_worldSize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8946441158362511491, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
