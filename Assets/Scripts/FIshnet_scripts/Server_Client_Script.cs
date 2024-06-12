@@ -3,6 +3,7 @@ using FishNet;
 using PolkaDOTS.Emulation;
 using FishNet.Managing;
 using FishNet.Transporting;
+using System.Collections;
 
 public class NetworkHelper : MonoBehaviour
  {
@@ -35,6 +36,19 @@ public class NetworkHelper : MonoBehaviour
 
         #else
         string[] args = System.Environment.GetCommandLineArgs();
+        for(int i = 0; i < args.Length-1;i++)
+        {
+            if (args[i] == "-closeafter"){
+                int time;
+                if (!int.TryParse(args[i+1],  out time)){
+                    Debug.LogError("Unable to parse string.");    
+                }
+                StartCoroutine(waiter(time));
+                break;
+            }
+        }
+
+        args = System.Environment.GetCommandLineArgs();
 
         foreach (string arg in args)
         {
@@ -80,6 +94,13 @@ public class NetworkHelper : MonoBehaviour
         // networkManager.StartClient();
         #endif
 
+    }
+    IEnumerator waiter(int time)
+    {
+        yield return new WaitForSeconds(time);
+        Debug.Log("quiting client");
+        Application.Quit();
+        Debug.Log("this should not print");
     }
 
     // private void StartPlayerReplayEmulation(string inputTraceFile){

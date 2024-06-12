@@ -37,6 +37,23 @@ public class FirstPersonController : NetworkBehaviour
     public Material highlightMaterial;
     private GameObject highlightedBlock;
 
+
+    [Header("Benchmark Config")]
+    public bool enable_RPC_benchmark = false;
+
+    public int x = 0;
+    public int z = 0;
+
+    private Vector3 targetCoordinates ;
+    private bool is_placed = false;
+
+    public float tick_interval_time = 0.5f; 
+    private float next_Tick = 0;        
+
+
+
+
+
     void OnEnable()
     {
         move.Enable();
@@ -73,7 +90,25 @@ public class FirstPersonController : NetworkBehaviour
             }
             return;
         }
+        #if !UNITY_EDITOR
+        string[] args = System.Environment.GetCommandLineArgs();
+        if (args.Length > 3){
+            for(int i = 0; i < args.Length-3;i++)
+            {
+                if (args[i] == "-rpc_benchmark"){
+                    enable_RPC_benchmark = true;
+                    if (!int.TryParse(args[i+1],  out x) || !int.TryParse(args[i+2], out z)){
+                        Debug.LogError("Unable to parse string.");    
+                    }
+                    if(!float.TryParse(args[i+3],  out tick_interval_time)){
+                        Debug.LogError("Unable to parse string.");    
+                    }
+                }
 
+            }
+        }
+        #endif
+        
 
         // Disable rendering of the local player's body
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
@@ -86,10 +121,15 @@ public class FirstPersonController : NetworkBehaviour
     }
     void Start()
     {
-
+        if(enable_RPC_benchmark){
+            Debug.LogError("Starting Benchmark: terainmodification_benchmark: x:"+x+" z:"+z+"tick_interval_time "+ tick_interval_time);
+            targetCoordinates = new Vector3(x, 7, z);
+            next_Tick = Time.time + tick_interval_time;
+        }
         Cursor.lockState = CursorLockMode.Locked;
 
         controller = GetComponent<CharacterController>();
+
     }
 
 
@@ -103,10 +143,54 @@ public class FirstPersonController : NetworkBehaviour
             return;
         }
         
+        if(enable_RPC_benchmark){
+            benchmark_step();
+        }
+        
         HighlightBlock();
         HandleBlocks();
         HandleCamera();
         HandleMovement();
+    }
+     void benchmark_step(){
+        if ( next_Tick <= Time.time)
+        {
+            if(is_placed)
+            {
+                remove_at_cord_RPC(targetCoordinates);
+                Debug.Log("removed block");
+                is_placed = false;
+            }
+            else
+            {
+                place_at_cord_RPC(targetCoordinates);
+                Debug.Log("added block");
+                is_placed = true;
+            }
+            next_Tick = Time.time + tick_interval_time;
+        }
+        
+    }
+
+    [ServerRpc]
+    void remove_at_cord_RPC(Vector3 targetCoordinates)
+    {
+        Vector3 test = RoundToNearestGrid(targetCoordinates) + new Vector3(0,2,0);
+        Ray ray = new Ray(test, Vector3.down); // Assuming the ray points downward
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        { 
+            Destroy(hit.collider.gameObject);
+            InstanceFinder.ServerManager.Despawn(hit.collider.gameObject);
+        }
+    }
+
+    [ServerRpc]
+    void place_at_cord_RPC(Vector3 targetCoordinates)
+    {
+        Vector3 gridPosition = RoundToNearestGrid(targetCoordinates);
+        GameObject newBlock = Instantiate(blockPrefab, gridPosition, Quaternion.identity);
+        InstanceFinder.ServerManager.Spawn(newBlock);
     }
 
     void HandleCamera()
