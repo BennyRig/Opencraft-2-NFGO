@@ -356,6 +356,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlatMap
       objectReference: {fileID: 0}
+    - target: {fileID: 596296520556926139, guid: a9d5474c7a652204386097cc641f9914,
+        type: 3}
+      propertyPath: m_TagString
+      value: WorldGen
+      objectReference: {fileID: 0}
     - target: {fileID: 4653115375583223203, guid: a9d5474c7a652204386097cc641f9914,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -422,6 +427,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2593175915567221382, guid: 5bcfaabd8a8c7874e8ce5e4f17bc5744,
         type: 3}
+    - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
+        type: 3}
+      propertyPath: Grass_blockPrefab
+      value: 
+      objectReference: {fileID: 2593175915567221382, guid: 5bcfaabd8a8c7874e8ce5e4f17bc5744,
+        type: 3}
+    - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
+        type: 3}
+      propertyPath: Stone_blockPrefab
+      value: 
+      objectReference: {fileID: 2593175915567221382, guid: 0058d393ed0d0144cb82e2bb1f5ae84a,
+        type: 3}
+    - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
+        type: 3}
+      propertyPath: benchmark_selection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
+        type: 3}
+      propertyPath: benchmark_worldSize
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9150917469302226820, guid: a9d5474c7a652204386097cc641f9914,
         type: 3}
       propertyPath: _scenePathHash

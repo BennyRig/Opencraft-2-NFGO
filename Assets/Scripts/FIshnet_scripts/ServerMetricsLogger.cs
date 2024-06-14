@@ -5,6 +5,7 @@ using System.Linq;
 using FishNet.Object;
 using FishNet;
 using Unity.Profiling;
+
 public class ServerMetricsLogger : NetworkBehaviour
 {
     private string logFileName;
@@ -47,11 +48,6 @@ public class ServerMetricsLogger : NetworkBehaviour
         string path = Path.Combine(logDirectory, logFileName);
         writer = new StreamWriter(path, true);
 
-
-
-
-
-
         //write the current command 
         string[] args = System.Environment.GetCommandLineArgs();
         string arg_string ="";
@@ -59,7 +55,7 @@ public class ServerMetricsLogger : NetworkBehaviour
         {
             arg_string += args[i]+" ";
         }
-        writer.WriteLine($"{arg_string}");
+        //writer.WriteLine($"{arg_string}");
         // Write CSV header
         writer.WriteLine("Timestamp,Uptime(seconds),PlayerCount,ObjectCount,Memory:MB,Frame Time:ms");
 
@@ -99,9 +95,8 @@ public class ServerMetricsLogger : NetworkBehaviour
         // Log server metrics to file in CSV format
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-         string usedMemory = $"{usedMemoryRecorder.LastValue / (1024 * 1024)}";
+        string usedMemory = $"{usedMemoryRecorder.LastValue / (1024 * 1024)}";
         string mainThread = $"{GetRecorderFrameAverage(mainThreadRecorder) * (1e-6f):F1}";
-
 
         string csvLine = $"{timestamp},{uptime.TotalSeconds},{playerCount},{objectCount},{usedMemory},{mainThread}";
         writer.WriteLine(csvLine);
