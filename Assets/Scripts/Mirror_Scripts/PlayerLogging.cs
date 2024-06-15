@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Mirror;
 using System.IO;
+using Unity.Profiling;
+
 
 public class PlayerLogging : NetworkBehaviour
 {
@@ -10,11 +12,14 @@ public class PlayerLogging : NetworkBehaviour
 
     private bool isLoggingInitialized = false;
 
+    private ProfilerRecorder usedMemoryRecorder;
+    private ProfilerRecorder mainThreadRecorder;
+
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
 
-        if (!isLoggingInitialized)
+        if (isLocalPlayer && !isLoggingInitialized)
         {
             InitializeLogging();
             isLoggingInitialized = true;
@@ -27,6 +32,11 @@ public class PlayerLogging : NetworkBehaviour
         
         string logDirectory = Path.Combine(Application.dataPath, "mirror_logs");
 
+         usedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "System Used Memory");
+
+        mainThreadRecorder = ProfilerRecorder.StartNew( ProfilerCategory.Internal, "Main Thread", 15);
+
+
         if (!Directory.Exists(logDirectory))
         {
             Directory.CreateDirectory(logDirectory);
@@ -34,35 +44,63 @@ public class PlayerLogging : NetworkBehaviour
 
         string path = Path.Combine(logDirectory, logFileName);
         writer = new StreamWriter(path, true);
+        
+        writer.WriteLine("Timestamp,PlayerPosition_X,PlayerPosition_Y,PlayerPosition_Z,RoundTripDelay_ms,Memory:MB,Frame Time:ms");
 
         LogPlayerData();
     }
 
     void LogPlayerData()
     {
-        InvokeRepeating(nameof(LogPlayerState), 0f, 1f);
+        InvokeRepeating(nameof(LogPlayerState), 0f, 0.5f);
     }
+    static double GetRecorderFrameAverage(ProfilerRecorder recorder)
+    {
+        var samplesCount = recorder.Capacity;
+        if (samplesCount == 0)
+            return 0;
 
+        double r = 0;
+        unsafe
+        {
+            var samples = stackalloc ProfilerRecorderSample[samplesCount];
+            recorder.CopyTo(samples, samplesCount);
+            for (var i = 0; i < samplesCount; ++i)
+                r += samples[i].Value;
+            r /= samplesCount;
+        }
+
+        return r;
+    }
+    
     void LogPlayerState()
     {
         if (transform == null)
             return;
-
         Vector3 playerPosition = transform.position;
+       
         double player_rtt = NetworkTime.rtt * 1000;
-        string formattedLatency = player_rtt.ToString("F2");
+        string formattedLatency =$"{player_rtt}";
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string usedMemory = $"{usedMemoryRecorder.LastValue / (1024 * 1024)}";
+        string mainThread = $"{GetRecorderFrameAverage(mainThreadRecorder) * (1e-6f):F1}";
 
-        writer.WriteLine($"[{timestamp}] Player Position: {playerPosition} Round-trip delay: {formattedLatency} ms");
+        // Log player data to file in CSV format
+        string csvLine = $"{timestamp},{playerPosition.x},{playerPosition.y},{playerPosition.z},{formattedLatency},{usedMemory},{mainThread}";
+        writer.WriteLine(csvLine);
 
         writer.Flush();
     }
 
     void OnDestroy()
     {
-        if (writer != null)
-        {
-            writer.Close();
+        if(isLocalPlayer){
+            if (writer != null)
+            {
+                writer.Close();
+            }
+            usedMemoryRecorder.Dispose();
+            mainThreadRecorder.Dispose();
         }
     }
 }
