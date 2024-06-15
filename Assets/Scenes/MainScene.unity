@@ -442,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
         type: 3}
       propertyPath: benchmark_selection
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5041332526504645008, guid: a9d5474c7a652204386097cc641f9914,
         type: 3}

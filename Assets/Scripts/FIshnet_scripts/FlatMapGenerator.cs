@@ -181,30 +181,30 @@ using System.Globalization;
         Debug.Log("seting size");
         switch(benchmark_worldSize){
             case worldSizes.small:
-                //12,500 objects
+                //5,000 objects
                 mapWidth  = 50;
-                mapHeight = 5;
+                mapHeight = 2;
                 mapLength = 50;
                 Debug.Log("world size set to small");
                 return;
             case worldSizes.medium :
-                //30,000 objects 	
-                mapWidth  = 100;
-                mapHeight = 4;
-                mapLength = 100;	
+                //15,000 objects 	
+                mapWidth  = 50;
+                mapHeight = 6;
+                mapLength = 50;	
                 Debug.Log("world size set to medium");
                 return;
             case worldSizes.large :
-                //60,000 objects 	
+                //30,000 objects 	
                 mapWidth  = 100;
-                mapHeight = 6;
+                mapHeight = 3;
                 mapLength = 100;
                 Debug.Log("world size set to large");
                 return;
             case worldSizes.extra_large :
-                //100,000 objects 
+                //50,000 objects 
                 mapWidth  = 100;
-                mapHeight = 10;
+                mapHeight = 4;
                 mapLength = 100;	
                 Debug.Log("world size set to extra_large");
                 return;
