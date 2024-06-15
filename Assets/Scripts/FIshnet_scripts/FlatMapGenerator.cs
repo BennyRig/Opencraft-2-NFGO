@@ -40,7 +40,7 @@ using System.Globalization;
     public float tick_interval_time = 1f; 
     private float next_Tick = 0; 
     public int blocks_per_tick = 10;
-   
+    public float tick_interval_reduction = 0.1f; 
 
     private int cur_y = 4;
     private int cur_x = 0;
@@ -85,12 +85,18 @@ using System.Globalization;
                                 break;
                         } 
                     }
-                    if (args[i] == "-enviroment_load"){
+                    if (args[i] == "-enviroment_load" && i < args.Length-3){
                         benchmark_selection = benchmark_type.terainmodification;
                         if(!float.TryParse(args[i+1],  out tick_interval_time)){
                             Debug.LogError("Unable to parse string.");    
                         }
-                    }
+                        if(!int.TryParse(args[i+2],  out blocks_per_tick)){
+                            Debug.LogError("Unable to parse string.");    
+                        }
+                         if(!float.TryParse(args[i+3],  out tick_interval_reduction)){
+                            Debug.LogError("Unable to parse string.");    
+                        }
+                    } 
                 }
             }
             Debug.Log("entering switch");
@@ -134,7 +140,7 @@ using System.Globalization;
                     GameObject block = Instantiate(Grass_blockPrefab, position, Quaternion.identity);
                     InstanceFinder.ServerManager.Spawn(block);
                 }
-                tick_interval_time -= 0.01f; 
+                tick_interval_time -= tick_interval_reduction; 
                 next_Tick = Time.time + tick_interval_time;
             }
           
