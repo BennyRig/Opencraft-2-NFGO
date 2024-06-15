@@ -181,24 +181,24 @@ using System.Collections;
                 Debug.Log("world size set to small");
                 return;
             case worldSizes.medium :
-                //50,000 objects 	
+                //40,000 objects 	
                 mapWidth  = 100;
-                mapHeight = 5;
+                mapHeight = 4;
                 mapLength = 100;	
                 Debug.Log("world size set to medium");
                 return;
             case worldSizes.large :
                 //100,000 objects 	
                 mapWidth  = 100;
-                mapHeight = 10;
+                mapHeight = 6;
                 mapLength = 100;
                 Debug.Log("world size set to large");
                 return;
             case worldSizes.extra_large :
                 //400,000 objects 
-                mapWidth  = 200;
+                mapWidth  = 100;
                 mapHeight = 10;
-                mapLength = 200;	
+                mapLength = 100;	
                 Debug.Log("world size set to extra_large");
                 return;
         }

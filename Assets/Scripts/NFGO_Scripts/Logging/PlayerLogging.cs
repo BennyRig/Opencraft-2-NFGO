@@ -24,12 +24,10 @@ public class PlayerLogging : NetworkBehaviour
     {
         
         base.OnNetworkSpawn();
-        if(!IsServer){
-            if (!isLoggingInitialized)
-            {
-                InitializeLogging();
-                isLoggingInitialized = true;
-            }
+        if (!IsServer&& IsOwner && !isLoggingInitialized)
+        {
+            InitializeLogging();
+            isLoggingInitialized = true;
         }
     }
 
@@ -58,7 +56,7 @@ public class PlayerLogging : NetworkBehaviour
         {
             arg_string += args[i]+" ";
         }
-        writer.WriteLine($"{arg_string}");
+        //writer.WriteLine($"{arg_string}");
 
         // Write CSV header
         writer.WriteLine("Timestamp,PlayerPosition_X,PlayerPosition_Y,PlayerPosition_Z,RoundTripDelay_ms,Memory:MB,Frame Time:ms");

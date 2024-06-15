@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Unity.Netcode;
+using Unity.Profiling;
 
 public class ServerMetricsLogger : NetworkBehaviour
 {
@@ -13,6 +14,9 @@ public class ServerMetricsLogger : NetworkBehaviour
     private bool isLoggingInitialized = false;
 
     private DateTime serverStartTime;
+
+    private ProfilerRecorder usedMemoryRecorder;
+    private ProfilerRecorder mainThreadRecorder;
 
    // idk if OnNetworkSpawn is correct
     public override void OnNetworkSpawn()
@@ -32,6 +36,11 @@ public class ServerMetricsLogger : NetworkBehaviour
     {
         logFileName = "server_log.csv";
         string logDirectory = Path.Combine(Application.dataPath, "mirror_logs");
+
+        usedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "System Used Memory");
+
+        mainThreadRecorder = ProfilerRecorder.StartNew( ProfilerCategory.Internal, "Main Thread", 15);
+
         if (!Directory.Exists(logDirectory))
         {
             Directory.CreateDirectory(logDirectory);
@@ -40,16 +49,33 @@ public class ServerMetricsLogger : NetworkBehaviour
         writer = new StreamWriter(path, true);
     	
         // Write CSV header
-        writer.WriteLine("Timestamp,Uptime(seconds),PlayerCount,ObjectCount");
+        writer.WriteLine("Timestamp,Uptime(seconds),PlayerCount,ObjectCount,Memory:MB,Frame Time:ms");
 
         LogServerMetrics();
     }
 
     void LogServerMetrics()
     {
-        InvokeRepeating(nameof(LogMetrics), 0f, 60f); // Log metrics every minute
+        InvokeRepeating(nameof(LogMetrics), 0f, 0.5f); // Log metrics every minute
     }
+     static double GetRecorderFrameAverage(ProfilerRecorder recorder)
+    {
+        var samplesCount = recorder.Capacity;
+        if (samplesCount == 0)
+            return 0;
 
+        double r = 0;
+        unsafe
+        {
+            var samples = stackalloc ProfilerRecorderSample[samplesCount];
+            recorder.CopyTo(samples, samplesCount);
+            for (var i = 0; i < samplesCount; ++i)
+                r += samples[i].Value;
+            r /= samplesCount;
+        }
+
+        return r;
+    }
     void LogMetrics()
     {
         
@@ -65,7 +91,11 @@ public class ServerMetricsLogger : NetworkBehaviour
 
         // Log server metrics to file in CSV format
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string csvLine = $"{timestamp},{uptime.TotalSeconds},{playerCount},{objectCount},{arg_string}";
+
+        string usedMemory = $"{usedMemoryRecorder.LastValue / (1024 * 1024)}";
+        string mainThread = $"{GetRecorderFrameAverage(mainThreadRecorder) * (1e-6f):F1}";
+
+        string csvLine = $"{timestamp},{uptime.TotalSeconds},{playerCount},{objectCount},{usedMemory},{mainThread}";        
         writer.WriteLine(csvLine);
 
         writer.Flush();
@@ -78,6 +108,9 @@ public class ServerMetricsLogger : NetworkBehaviour
             if (writer != null)
             {
                 writer.Close();
+                usedMemoryRecorder.Dispose();
+                mainThreadRecorder.Dispose();
+
             }
          }
     }
