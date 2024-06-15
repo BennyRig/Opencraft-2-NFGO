@@ -202,7 +202,7 @@ using System.Globalization;
                 Debug.Log("world size set to large");
                 return;
             case worldSizes.extra_large :
-                //50,000 objects 
+                //40,000 objects 
                 mapWidth  = 100;
                 mapHeight = 4;
                 mapLength = 100;	
