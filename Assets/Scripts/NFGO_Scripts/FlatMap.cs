@@ -40,7 +40,7 @@ using System.Collections;
     public float tick_interval_time = 1f; 
     private float next_Tick = 0; 
     public int blocks_per_tick = 10;
-    public float tick_interval_reduction = 0.1f
+    public float tick_interval_reduction = 0.1f;
    
 
     private int cur_y = 4;
