@@ -369,6 +369,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
+      propertyPath: sendRate
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
       propertyPath: onlineScene
       value: 
       objectReference: {fileID: 0}

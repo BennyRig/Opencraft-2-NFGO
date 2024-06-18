@@ -34,7 +34,7 @@ public class ServerMetricsLogger : NetworkBehaviour
 
     void InitializeLogging()
     {
-        logFileName = "server_log.txt";
+        logFileName = "server_log.csv";
         string logDirectory = Path.Combine(Application.dataPath, "mirror_logs");
 
         usedMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "System Used Memory");

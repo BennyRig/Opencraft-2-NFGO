@@ -28,7 +28,7 @@ public class PlayerLogging : NetworkBehaviour
     void InitializeLogging()
     {
         string connectionId = Guid.NewGuid().ToString();
-        logFileName = "player_log_" + connectionId + ".txt";
+        logFileName = "player_log_" + connectionId + ".csv";
         
         string logDirectory = Path.Combine(Application.dataPath, "mirror_logs");
 
