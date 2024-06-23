@@ -277,6 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4153331680123156177, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
+      propertyPath: blocks_per_tick
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153331680123156177, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
       propertyPath: Grass_blockPrefab
       value: 
       objectReference: {fileID: 2593175915567221382, guid: 5bcfaabd8a8c7874e8ce5e4f17bc5744,
@@ -289,6 +294,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4153331680123156177, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
+      propertyPath: tick_interval_time
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153331680123156177, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
       propertyPath: benchmark_selection
       value: 2
       objectReference: {fileID: 0}
@@ -297,6 +307,11 @@ PrefabInstance:
       propertyPath: benchmark_worldSize
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4153331680123156177, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
+      propertyPath: tick_interval_reduction
+      value: 0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 4318634564997860021, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
       propertyPath: networkManager
@@ -304,8 +319,13 @@ PrefabInstance:
       objectReference: {fileID: 1756036285}
     - target: {fileID: 4318634564997860021, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
-      propertyPath: startServerInEditor
+      propertyPath: startClientInEditor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318634564997860021, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
+      propertyPath: startServerInEditor
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4760557209821025233, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
@@ -370,7 +390,7 @@ PrefabInstance:
     - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
       propertyPath: sendRate
-      value: 100
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}
@@ -391,6 +411,11 @@ PrefabInstance:
         type: 3}
       propertyPath: editorAutoStart
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
+        type: 3}
+      propertyPath: headlessStartMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6375225697336743240, guid: ee0e0ca2cc142794cb4f77e4acc7d00f,
         type: 3}

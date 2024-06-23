@@ -714,7 +714,7 @@ namespace Mirror
         {
             if (Utils.IsHeadless())
             {
-                Application.targetFrameRate = sendRate;
+                //Application.targetFrameRate = sendRate;
                 // Debug.Log($"Server Tick Rate set to {Application.targetFrameRate} Hz.");
             }
         }

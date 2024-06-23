@@ -32,6 +32,8 @@ public class ServerMetricsLogger : NetworkBehaviour
         }
     }
 
+    
+
     void InitializeLogging()
     {
         logFileName = "server_log.csv";

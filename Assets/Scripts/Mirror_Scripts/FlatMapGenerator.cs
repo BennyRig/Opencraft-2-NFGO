@@ -112,7 +112,7 @@ public class FlatMapGenerator : NetworkBehaviour
         }
     }
 
-    void Update(){
+    void FixedUpdate(){
         if (isServer && benchmark_selection == benchmark_type.terainmodification){
             if ( next_Tick <= Time.time)
             {
@@ -136,7 +136,12 @@ public class FlatMapGenerator : NetworkBehaviour
                     GameObject block = Instantiate(Grass_blockPrefab, position, Quaternion.identity);
                     NetworkServer.Spawn(block);
                 }
-                tick_interval_time -= tick_interval_reduction; 
+                if (tick_interval_time > 0){
+                    tick_interval_time -= tick_interval_reduction; 
+                }
+                else{
+                    tick_interval_time =0;
+                }
                 next_Tick = Time.time + tick_interval_time;
             }
           
