@@ -114,7 +114,7 @@ using System.Collections;
         }
     }
 
-    void Update(){
+    void FixedUpdate(){
         if (IsServer && benchmark_selection == benchmark_type.terainmodification){
             if ( next_Tick <= Time.time)
             {
