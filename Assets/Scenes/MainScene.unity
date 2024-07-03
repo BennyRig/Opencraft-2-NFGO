@@ -335,12 +335,12 @@ PrefabInstance:
     - target: {fileID: 3884695691840728501, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
       propertyPath: startClientInEditor
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3884695691840728501, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
       propertyPath: startServerInEditor
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6932877337140480021, guid: 036e21c1e93dbaf4caf478701ec8836d,
         type: 3}
