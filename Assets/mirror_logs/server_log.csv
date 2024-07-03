@@ -326,3 +326,6 @@ Timestamp,Uptime(seconds),PlayerCount,ObjectCount,Memory:MB,Frame Time:ms
 2024-06-23 16:45:13,43.2726139,0,7861,3019,14.0
 2024-06-23 16:45:13,43.76953,0,7861,3019,14.1
 2024-06-23 16:45:14,44.273985,0,7861,3019,14.1
+Timestamp,Uptime(seconds),PlayerCount,ObjectCount,Memory:MB,Frame Time:ms
+2024-07-03 13:18:20,0.2297501,0,7501,0,0.0
+2024-07-03 13:18:20,0.8205424,0,7541,3865,16.3

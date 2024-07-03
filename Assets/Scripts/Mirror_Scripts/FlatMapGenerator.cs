@@ -136,12 +136,8 @@ public class FlatMapGenerator : NetworkBehaviour
                     GameObject block = Instantiate(Grass_blockPrefab, position, Quaternion.identity);
                     NetworkServer.Spawn(block);
                 }
-                if (tick_interval_time > 0){
-                    tick_interval_time -= tick_interval_reduction; 
-                }
-                else{
-                    tick_interval_time =0;
-                }
+                
+                tick_interval_time -= tick_interval_reduction; 
                 next_Tick = Time.time + tick_interval_time;
             }
           

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using System.Collections;
+using kcp2k;
 
 public class NetworkHelper : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class NetworkHelper : MonoBehaviour
     
     public bool startServerInEditor = false;
     public bool startClientInEditor = false;
-    public string serverIP = "localhost";
+    public string serverIP = "127.0.0.1";
     public int serverPort = 7777;  // Add server port variable
 
 
@@ -20,78 +21,77 @@ public class NetworkHelper : MonoBehaviour
             return;
         }
 
-        #if UNITY_EDITOR
-        if (startServerInEditor)
+        if (Application.isEditor)
         {
-            networkManager.StartServer();
-
-            
-        }
-
-        if(startClientInEditor){
-            networkManager.StartClient();
-        }
-
-        #else
-        string[] args = System.Environment.GetCommandLineArgs();
-        for(int i = 0; i < args.Length-1;i++)
-        {
-            if (args[i] == "-closeafter"){
-                int time;
-                if (!int.TryParse(args[i+1],  out time)){
-                    Debug.LogError("Unable to parse string.");    
-                }
-                StartCoroutine(waiter(time));
-                break;
-            }
-        }
-        args = System.Environment.GetCommandLineArgs();
-        foreach (string arg in args)
-        {
-            if (arg == "-server")
+            if (startServerInEditor)
             {
                 networkManager.StartServer();
                 return;
             }
-            else if (arg == "-client")
-            {
+
+            if(startClientInEditor){
                 networkManager.StartClient();
                 return;
             }
-            
-            // else if (arg == "-server_ip")
-            // {
-            //     int index = System.Array.IndexOf(args, arg);
-            //     if (index < args.Length - 1)
-            //     {
-            //         serverIP = args[index + 1];
-            //     }
-            //     break;
-            // }
-            // else if(arg == "-server_port")  // Handle server port argument
-            // {
-            //     int index = System.Array.IndexOf(args, arg);
-            //     if (index < args.Length - 1)
-            //     {
-            //         serverPort = int.Parse(args[index + 1]);
-            //     }
-            //     break;
-            // }
         }
+        else{
+            string[] args = System.Environment.GetCommandLineArgs();
+            for(int i = 0; i < args.Length-1;i++)
+            {
+                if (args[i] == "-closeafter"){
+                    int time;
+                    if (!int.TryParse(args[i+1],  out time)){
+                        Debug.LogError("Unable to parse string.");    
+                    }
+                    StartCoroutine(waiter(time));
+                    break;
+                }
+            }
+            args = System.Environment.GetCommandLineArgs();
+            foreach (string arg in args)
+            {
+                if (arg == "-ip")
+                {
+                    int index = System.Array.IndexOf(args, arg);
+                    if (index < args.Length - 1)
+                    {
+                        serverIP = args[index + 1];
+                    }
+                }
+                else if(arg == "-port")  // Handle server port argument
+                {
+                    int index = System.Array.IndexOf(args, arg);
+                    if (index < args.Length - 1)
+                    {
+                        serverPort = int.Parse(args[index + 1]);
+                    }
+                }
+            }
 
-        // // Set the server IP
-        // UnityTransport unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        
-        // unityTransport.SetConnectionData(serverIP, serverPort);
+            // // Set the server IP
+            networkManager.networkAddress = serverIP;
 
-        // // Set the server port if a port transport is available
-        // if (Transport.active is PortTransport portTransport)
-        // {
-        //     portTransport.Port = (ushort)serverPort;
-        // }
-        
-        // networkManager.StartClient();
-        #endif
+            if (networkManager.transport is KcpTransport kcpTransport)
+            {
+                kcpTransport.Port =  (ushort)serverPort;
+            }
+
+            args = System.Environment.GetCommandLineArgs();
+            foreach (string arg in args)
+            {
+                if (arg == "-server")
+                {
+                    networkManager.StartServer();
+                    return;
+                }
+                else if (arg == "-client")
+                {
+                    networkManager.StartClient();
+                    return;
+                }
+            }
+
+        }
 
     }
 

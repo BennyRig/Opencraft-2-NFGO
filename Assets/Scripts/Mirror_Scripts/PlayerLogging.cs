@@ -80,6 +80,7 @@ public class PlayerLogging : NetworkBehaviour
         Vector3 playerPosition = transform.position;
        
         double player_rtt = NetworkTime.rtt * 1000;
+        
         string formattedLatency =$"{player_rtt}";
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string usedMemory = $"{usedMemoryRecorder.LastValue / (1024 * 1024)}";
