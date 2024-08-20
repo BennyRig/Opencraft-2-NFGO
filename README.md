@@ -1,6 +1,6 @@
 # Opencraft-2-Netcode-prototypes
 This is the project that contains the prototypes for the Envirostick_Opencraft2_NetworkBenchmark contained in the branches are the 3 prototypes used in that benchmark
-This branch still holds the original Opencraft 2 
+
 
 [Envirostick_Opencraft2_NetworkBenchmark](https://github.com/atlarge-research/Envirostick_Opencraft2_NetworkBenchmark)
 
