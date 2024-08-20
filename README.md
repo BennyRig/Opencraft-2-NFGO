@@ -7,8 +7,11 @@ This is the project that contains the prototypes for the Envirostick_Opencraft2_
 [Thesis latex](https://www.overleaf.com/read/smjjfpdzrtbj#6711f3)
 
 The branches used in the final benchmark are:
+
 Fishnet-Benchmark
+
 Mirror_benchmark
+
 NFGO_benchmark
 
 The setup works similar to Opencraft 2.
