@@ -6,6 +6,11 @@ This branch still holds the original Opencraft 2
 
 [Thesis latex](https://www.overleaf.com/read/smjjfpdzrtbj#6711f3)
 
+The branches used in the final benchmark are:
+Fishnet-Benchmark
+Mirror_benchmark
+NFGO_benchmark
+
 The setup works similar to Opencraft 2.
 
 For the running of builds unlike Normal Opencraft, supply cmd args and not a deployment config 
