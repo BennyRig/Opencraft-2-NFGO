@@ -1,4 +1,18 @@
-# Opencraft 2
+# Opencraft-2-Netcode-prototypes
+This is the project that contains the prototypes for the Envirostick_Opencraft2_NetworkBenchmark contained in the branches are the 3 prototypes used in that benchmark
+This branch still holds the original Opencraft 2 
+
+[Envirostick_Opencraft2_NetworkBenchmark](https://github.com/atlarge-research/Envirostick_Opencraft2_NetworkBenchmark)
+
+[Thesis latex](https://www.overleaf.com/read/smjjfpdzrtbj#6711f3)
+
+The setup works similar to Opencraft 2.
+
+For the running of builds unlike Normal Opencraft, supply cmd args and not a deployment config 
+
+Bellow is The original Documentation :
+
+# Opencarft setup
 Opencraft 2 is an Minecraft-like online game built in Unity. It is intended for supporting experimental research on
 online game and cloud gaming performance. 
 ## Setup
